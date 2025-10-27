@@ -139,8 +139,29 @@ public class Board {
      * @return Whether the move was successfully completed or not. (Moves are not completed if they are not legal.)
      */
     public boolean movePiece(int startRow, int startCol, int endRow, int endCol) {
-        
+        Piece movingPiece = getPiece(startRow, startCol);
+    
+        // 1. Check if there is a piece to move
+        if (movingPiece == null) {
+            return false;
+        }
+    
+        // 2. Check if the move is legal
+        if (!movingPiece.isMoveLegal(this, endRow, endCol)) {
+            return false;
+        }
+    
+        // 3. Move the piece
+        setPiece(endRow, endCol, movingPiece);
+        setPiece(startRow, startCol, null);
+    
+        // 4. Update internal position variables
+        movingPiece.setPosition(endRow, endCol);
+    
+        // 5. Return success
+        return true;
     }
+    
 
     /**
      * Returns true if there are fewer than TWO kings on the board.
