@@ -141,24 +141,18 @@ public class Board {
     public boolean movePiece(int startRow, int startCol, int endRow, int endCol) {
         Piece movingPiece = getPiece(startRow, startCol);
     
-        // 1. Check if there is a piece to move
         if (movingPiece == null) {
             return false;
         }
     
-        // 2. Check if the move is legal
         if (!movingPiece.isMoveLegal(this, endRow, endCol)) {
             return false;
         }
     
-        // 3. Move the piece
         setPiece(endRow, endCol, movingPiece);
         setPiece(startRow, startCol, null);
-    
-        // 4. Update internal position variables
         movingPiece.setPosition(endRow, endCol);
     
-        // 5. Return success
         return true;
     }
     
@@ -168,7 +162,25 @@ public class Board {
      * @return If the game is in a game over state.
      */
     public boolean isGameOver() {
+        int kingCount = 0;
+        boolean foundWhiteKing = false;
+        boolean foundBlackKing = false;
 
+        for (int r = 0; r < board.length; r ++){
+            for (int c = 0; c < board[r].length; c ++){
+                Piece p = board[r][c];
+                if (p != null && p instanceof King){
+                    kingCount ++;
+
+                    boolean black = p.isBlack();
+                    if (black){
+                        foundBlackKing = true;
+                    } else {
+                        foundWhiteKing = true;
+                    }
+                }
+            }
+        }
     }
 
     /**
