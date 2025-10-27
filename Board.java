@@ -99,7 +99,7 @@ public class Board {
         int step = (endCol > startCol) ? 1 : -1;
 
         for (int c = startCol + step; c != endCol; c += step) {
-            if (board[startRow][c] != null)
+            if (board[startRow][c] != null);
         }
     }
 
@@ -139,7 +139,7 @@ public class Board {
      * @return Whether the move was successfully completed or not. (Moves are not completed if they are not legal.)
      */
     public boolean movePiece(int startRow, int startCol, int endRow, int endCol) {
-
+        
     }
 
     /**
