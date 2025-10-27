@@ -53,7 +53,7 @@ public class Board {
     public boolean verifySourceAndDestination(int startRow, int startCol, int endRow, int endCol, boolean isBlack) {
         if (startRow < 0 || startRow > 7 || startCol < 0 || startCol > 7 || 
         endRow < 0 || endRow > 7 || endCol < 0 || endCol > 7) {return false;}
-            
+    
         Piece source = board[startRow][startCol];
         if (source == null) { return false;}
 
@@ -82,6 +82,13 @@ public class Board {
      * @return True if the source and destination squares are adjacent, false otherwise.
      */
     public boolean verifyAdjacent(int startRow, int startCol, int endRow, int endCol) {
+        int rowDiff = Math.abs(endRow - startRow);
+        int colDiff = Math.abs(endCol - startCol);
+    
+        if ((rowDiff <= 1 && colDiff <= 1) && !(rowDiff == 0 && colDiff == 0)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -123,6 +130,19 @@ public class Board {
      * @return True if source and destination are in same column with no pieces between them, false otherwise.
      */
     public boolean verifyVertical(int startRow, int startCol, int endRow, int endCol) {
+        if (startCol != endCol) {
+        return false;
+        }
+
+        int step = (endRow > startRow) ? 1 : -1;
+
+        for (int r = startRow + step; r != endRow; r += step) {
+            if (board[r][startCol] != null) {
+                return false; 
+            }
+        }
+
+        return true;
     }
 
     /**
