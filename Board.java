@@ -120,6 +120,19 @@ public class Board {
      * @return True if source and destination are in same column with no pieces between them, false otherwise.
      */
     public boolean verifyVertical(int startRow, int startCol, int endRow, int endCol) {
+        if (startCol != endCol) {
+        return false;
+        }
+
+        int step = (endRow > startRow) ? 1 : -1;
+
+        for (int r = startRow + step; r != endRow; r += step) {
+            if (board[r][startCol] != null) {
+                return false; 
+            }
+        }
+
+        return true;
     }
 
     /**
