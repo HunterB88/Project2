@@ -101,13 +101,23 @@ public class Board {
      * @return True if source and destination are in same row with no pieces between them, false otherwise.
      */
     public boolean verifyHorizontal(int startRow, int startCol, int endRow, int endCol) {
-        if (startRow != endRow) {return false;}
+        if (startRow != endRow) {
+            return false;
+        }
 
-        int step = (endCol > startCol) ? 1 : -1;
+        int step;
+        if (endCol > startCol) {
+            step = 1;
+        } else {
+            step = -1;
+        }
 
         for (int c = startCol + step; c != endCol; c += step) {
-            if (board[startRow][c] != null);
+            if (board[startRow][c] != null) {
+                return false;
+            }
         }
+        return true;
     }
 
     /**
@@ -145,6 +155,19 @@ public class Board {
      * @return True if source and destination are on the same diagonal with no pieces between them, false otherwise.
      */
     public boolean verifyDiagonal(int startRow, int startCol, int endRow, int endCol) {
+        if (Math.abs(endRow - startRow) != Math.abs(endCol - startCol)) return false;
+
+        int rStep = (endRow > startRow) ? 1 : -1;
+        int cStep = (endCol > startCol) ? 1 : -1;
+
+        int r = startRow + rStep;
+        int c = startCol + cStep;
+        while (r != endRow && c != endCol) {
+            if (board[r][c] != null) return false;
+            r += rStep;
+            c += cStep;
+        }
+        return true;
     }
 
     // Game functionality methods
